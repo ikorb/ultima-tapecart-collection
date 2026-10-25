@@ -1,0 +1,13 @@
+[submodule "external/u4remastered"]
+	path = external/u4remastered
+	url = https://github.com/MagerValp/u4remastered.git
+[submodule "external/zx02"]
+	path = external/zx02
+	url = https://github.com/dmsc/zx02
+[submodule "external/eapi"]
+	path = external/eapi
+	url = https://gitlab.com/easyflash/eapi.git
+[submodule "external/c64ultimaeditor"]
+	path = external/c64ultimaeditor
+	url = https://github.com/zoggins/C64UltimaEditor.git
+	update = none

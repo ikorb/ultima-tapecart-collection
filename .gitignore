@@ -1,0 +1,14 @@
+.*
+!.gitignore
+!.gitmodules
+*~
+disks/*.d64
+build/
+.venv
+disks/*.g64
+disks/*.zip
+tests/data/
+editor/src/games/u6names.ts
+editor/src/games/u6original.ts
+__pycache__/
+*.pyc
