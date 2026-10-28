@@ -75,7 +75,8 @@ class TestC128Cache(unittest.TestCase):
             m.ram[1][:] = noise[1]
             m.vdc[:] = vdc
             m.trampolines()
-            m[0xFF00] = 0x0E
+            m.ram[1][0xFFF5:0xFFFA] = b"CBM\x24\xe2"           # the KERNAL's reset
+            m[0xFF00] = 0x0E                                    # hook ($E1F0)
             sim = c128sim.C128Sim(m)
             log = []
             sim.traps[LOAD] = self.loader(log)
@@ -144,7 +145,8 @@ class TestC128Cache(unittest.TestCase):
              (0x00FE, 0x0100),
              (0x6C00, 0x7B00)]          # temp.subs (its table points at a different
                                         # driver) and subs.128 or the driver
-    OURS1 = [(0xE000, 0xF000), (0x0000, 0x0400)]      # (common RAM is bank 0's)
+    OURS1 = [(0xE000, 0xF000), (0x0000, 0x0400),     # (common RAM is bank 0's)
+             (0xFFF5, 0xFFF6)]          # the reset hook's "CBM", which the port clears
 
     def same(self, sims, what, regs=("a", "x")):
         o, q = sims
@@ -180,6 +182,10 @@ class TestC128Cache(unittest.TestCase):
         o.mem[0xC8] |= 0x40         # (which also says the music is there: the
                                     # gates test bit 6 -- build.py MUSIC_GATES)
         self.same(sims, "the music setup", regs=())
+        # the KERNAL's reset hook: the original leaves its "CBM", under the
+        # vector startup's NMI stub overwrites (`$82B8`); the port breaks it
+        self.assertEqual(bytes(o.mem.ram[1][0xFFF5:0xFFF8]), b"CBM")
+        self.assertNotEqual(bytes(q.mem.ram[1][0xFFF5:0xFFF8]), b"CBM")
 
         o.mem[0x79] = q.mem[0x79] = 0x80                        # music on
         # (with I/O in, as enter.play calls it: the original reaches the VDC

@@ -418,6 +418,8 @@ The tapecart version fixes a few bugs of the original:
 - Attempting to use Journey Onward with no saved game on the disk overwrote one
     byte of memory that resulted in a garbled top line in the game if you
     created a character and then Journeyed Onward in the same session.
+- When running on a C128 in its native mode, resetting the computer would crash
+  it, requiring a power cycle to leave the game.
 
 The renderer and NPC path finding have been optimized to improve world traversal
 speed by about 30% (based on AI measurements).

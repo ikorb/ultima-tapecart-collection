@@ -347,6 +347,9 @@ t7:     php
         lda $c8                 ; the music is there: bit 6, which the
         ora #$40                ; games' music gates test (build.py
         sta $c8                 ; MUSIC_GATES; a C64 with an AR sets it too)
+        lda #$00                ; no reset hook: the KERNAL's reset jumps
+        sta $fff5               ; through $FFF8 here when $FFF5 says "CBM",
+                                ; and startup ($82B8) puts its NMI stub there
         plp
         sec                     ; (as $0269's copy loop leaves it)
         jsr $0123               ; start the player: timer, vectors in both
