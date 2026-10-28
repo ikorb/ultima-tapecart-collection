@@ -487,6 +487,24 @@ the previous area.
 Unlike the original game, the tapecart version fully resets the world when
 you create a new character or if you use the **R**eset option in the launcher.
 
+#### Character Transfer from Ultima IV/V
+
+The PC version of Ultima VI can import a character from Ultima IV and V, but
+that is one of the features left out of the C64 version. The tapecart release
+adds it via the launcher, but the process is a bit convoluted due to space
+constraints:
+
+1. Ensure that you have the saved game of Ultima IV and/or V you want to
+   transfer from on the tapecart.
+2. Create a new character in Ultima VI with the name and gender of your choice.
+   You need to answer the virtue questions, but your answers don't matter.
+3. When you are back at the main menu, reset your C64 and load the collection's
+   launcher again.
+4. On the Ultima VI page, use **T** to transfer your character, then **4** or
+   **5** to choose which game to import from. You will be shown the new
+   character stats and if you confirm the transfer with **Y**, the game will
+   launch with the transferred character in place.
+
 #### Bug Fixes and Improvements
 
 Ultima VI has a few quirks or bugs in the original version that have been fixed
