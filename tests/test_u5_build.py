@@ -196,6 +196,19 @@ class TestU5Build(unittest.TestCase):
                              f"disk {disk} {name}")
         self.assertGreater(zx_units, 200)
 
+    def test_the_roster_slot_ends_below_the_row_table(self):
+        """ROSTER loads at $1000; the shipped file's 1025th byte would land on
+        $1400, startup's bitmap row table, which Journey Onward with no game
+        and then creation never rebuild.  The base holds the 1024 bytes the
+        game writes."""
+        base = self.parts["page"]["U5_ROSTER"]
+        self.assertEqual(bytes(self.flash[base:base + 2]), u5.SAVE_MAGIC)
+        length = self.flash[base + 2] | self.flash[base + 3] << 8
+        self.assertEqual(length, u5.ROSTER_LEN)
+        self.assertLessEqual(0x1000 + length, 0x1400)
+        self.assertEqual(bytes(self.flash[base + 0x100:base + 0x100 + length]),
+                         bytes(self.parts["bodies"][(2, "ROSTER")][:length]))
+
     def test_the_menu_has_no_number_of_drives(self):
         """Disk 1A's `startup`, as stored, differs from the original only in
         the menu patches: the drives line skipped, the cursor stopped at five

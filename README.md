@@ -412,8 +412,12 @@ around this:
 
 #### Bug Fixes and Improvements
 
-The original version of Ultima V could in very rare cases misdetect a C64 as
-C128 and crash. This is fixed in the tapecart version.
+The tapecart version fixes a few bugs of the original:
+- The original version of Ultima V could in very rare cases misdetect a C64 as
+    C128 and crash.
+- Attempting to use Journey Onward with no saved game on the disk overwrote one
+    byte of memory that resulted in a garbled top line in the game if you
+    created a character and then Journeyed Onward in the same session.
 
 The renderer and NPC path finding have been optimized to improve world traversal
 speed by about 30% (based on AI measurements).
@@ -447,9 +451,13 @@ Unlike all the other games, the C128 save code is not fully crash-proof. If
 a save is interrupted mid-way, it may result in a blanked or corrupted save
 on the tapecart.
 
-Rarely after launching into the actual game, the top line is partially shifted
-and has incorrect colors. Restarting the game should fix it. If you can find a
-reliable way to reproduce it, that would be very helpful in finding a permanent fix.
+If you have flashed a tapecart with the 1.0 release, not yet played Ultima 5,
+try to Journey Onward from the main menu without a character, create one and
+then Journay Onward into the game, the top line of the screen will be a bit
+garbled. This is a bug inherited from the original game and can be avoided by
+not trying to Journey Onward with no character or restarting afterwards.
+If you fully flashed your tapecart with a 1.1 or later release, you won't hit
+this bug.
 
 ### Ultima VI
 

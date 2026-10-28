@@ -67,6 +67,13 @@ F_ZX = 0x02                      # stored as a zx02 stream (length = the stream'
 # rather than in the directory.
 WRITABLE = {(2, "ROSTER"), (2, "PRTY.DATA"), (2, "LIST"),
             (2, "SLIST"), (2, "TLIST"), (8, "TLIST")}
+# The ROSTER slot's base holds the 1024 bytes the game writes, not the 1025
+# it ships with: loaded at $1000, the 1025th byte lands on $1400, the first
+# entry of startup's bitmap row table.  Journey Onward loads ROSTER before
+# it finds there is no game, and neither "No active game!" nor creation
+# goes back through startup's $8025, which builds the table; the next
+# Journey Onward then draws text row 0 forty bytes to the left.
+ROSTER_LEN = 1024
 SAVE_SLOT = 0x1000
 SAVE_MAGIC = bytes([0xA5, 0x5A])
 
@@ -1006,6 +1013,8 @@ def parts():
         for name in order[n]:
             load, body = files[(n, name)]
             if (n, name.upper()) in WRITABLE:
+                if (n, name.upper()) == (2, "ROSTER"):
+                    body = body[:ROSTER_LEN]
                 base = save_base + slot * SAVE_SLOT
                 if len(body) + 0x100 > SAVE_SLOT:
                     raise SystemExit(f"{name} on disk {n} does not fit a slot")
