@@ -18,9 +18,9 @@
 ;;;    and the caller's $01 is saved and restored around each operation.
 ;;;
 ;;;  * Because all-RAM means no KERNAL, every entry point that touches the bus
-;;;    runs with interrupts disabled.  The 1-bit protocol is not timing
-;;;    critical, so an interrupt-friendly variant is possible; U6 will need one
-;;;    (it plays music from an IRQ while loading).  Not implemented yet.
+;;;    runs with interrupts disabled -- unless TC_IRQ_ON: the 1-bit protocol is
+;;;    not timing critical, so U6, which plays music from an IRQ while
+;;;    loading, keeps interrupts on (see TC_IRQ_ON below).
 ;;;
 ;;;  * MOTOR MUST STAY OFF.  $01 bit 5 low drops the cart back to streaming
 ;;;    mode and costs ~70ms to recover.  Every value written here has bit 5
